@@ -4,7 +4,7 @@ Verso is a standalone theme for current Obsidian releases. It does not vendor or
 
 ## Community Directory positioning
 
-Describe Verso as a standalone theme that began as a visual fork of Minimal and now has its own independent codebase, not as a compatible replacement. The generated theme owns its palette and focused component styling, has one small Style Settings panel, keeps Obsidian's standard primary navigation, and excludes Minimal's color schemes, helper classes, block widths, cards, legacy compatibility, and community-plugin styling.
+Describe Verso as a standalone theme that began as a visual fork of Minimal and now has its own independent codebase, not as a compatible replacement. The generated theme owns its palette and focused component styling, has one small Style Settings panel, keeps Obsidian's standard primary navigation, and excludes Minimal's color schemes, block-width and other helper classes, cards, legacy compatibility, and community-plugin styling.
 
 Keep Steph Ango's credit and `LICENSE-Minimal` in the repository. Before submission, ask Kepano to confirm his approval in a public GitHub issue or comment and list him as a Community Directory contributor.
 
@@ -22,7 +22,7 @@ The directory-facing name is **Verso**. Obsidian's [manifest rules](https://docs
 
 1. Publish the fresh repository history as `linuz90/obsidian-verso` and confirm the theme name.
 2. Link Kepano's public approval and add him as a Community Directory contributor.
-3. Run a directory preview scan to confirm the Verso name is accepted despite the unrelated plugin with the same name.
+3. Confirm with the Community Directory team that the Verso name is accepted despite the unrelated plugin with the same name. Use the directory preview scanner when the entry-management UI makes it available.
 4. Run `pnpm check` and confirm zero error-severity findings from the official CSS scanner.
 5. Confirm the default branch contains `README.md`, `LICENSE`, `LICENSE-Minimal`, `manifest.json`, `theme.css`, `versions.json`, and both screenshots.
 6. Check that `manifest.json` has the final name, semantic version, minimum Obsidian version, and author details.

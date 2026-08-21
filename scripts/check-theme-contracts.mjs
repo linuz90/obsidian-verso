@@ -68,6 +68,7 @@ const publicBrandPaths = [
   ...sourcePaths,
   "theme.css",
   "README.md",
+  "CONTRIBUTING.md",
   "PUBLISHING.md",
   "AGENTS.md",
   "manifest.json",
@@ -273,7 +274,9 @@ const requiredPaletteProperties = [
   "--verso-border-muted",
   "--verso-border-strong",
   "--verso-border-subtle",
+  "--verso-code-background",
   "--verso-highlight",
+  "--verso-inline-code-background",
   "--verso-on-accent",
   "--verso-selection",
   "--verso-text-faint",
@@ -304,12 +307,45 @@ for (const requiredToken of [
 }
 
 let hasNativeReadableWidth = false;
+let hasReadableWidthMargins = false;
+let hasMobileReadableWidthMargins = false;
+let hasCodeBackground = false;
 builtRoot.walkDecls("--file-line-width", (declaration) => {
   hasNativeReadableWidth ||= declaration.value.includes("--verso-line-width")
     && declaration.value.includes("--verso-max-width");
 });
+builtRoot.walkRules((rule) => {
+  if (!rule.selectors.includes(".is-readable-line-width")) return;
+  rule.walkDecls("--file-margins", (declaration) => {
+    hasReadableWidthMargins ||= declaration.value === "1rem 0 0";
+  });
+});
+builtRoot.walkAtRules("media", (atRule) => {
+  if (!atRule.params.includes("width <= 600px")) return;
+  atRule.walkRules((rule) => {
+    if (!rule.selectors.includes(".is-readable-line-width")) return;
+    rule.walkDecls("--file-margins", (declaration) => {
+      hasMobileReadableWidthMargins ||= declaration.value.includes("--file-margins-x");
+    });
+  });
+});
+builtRoot.walkDecls("--code-background", (declaration) => {
+  hasCodeBackground ||= declaration.value === "var(--verso-code-background)";
+});
 if (!hasNativeReadableWidth) {
   throw new Error("Verso no longer delegates readable width to Obsidian's native variable");
+}
+if (!hasReadableWidthMargins) {
+  throw new Error("Readable line width no longer measures the visible text area");
+}
+if (!hasMobileReadableWidthMargins) {
+  throw new Error("Mobile readable line width lost its horizontal file margin");
+}
+if (!builtCss.includes('[class~="cm-contentContainer"]') || !hasCodeBackground) {
+  throw new Error("Verso lost its visible text measure or code surface styling");
+}
+if (builtCss.includes("--table-drag-padding")) {
+  throw new Error("Verso overrides Obsidian's editable table handle spacing");
 }
 
 const maxBuiltBytes = 64 * 1024;

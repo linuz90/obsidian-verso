@@ -60,6 +60,7 @@ body {
   --background-modifier-hover: var(--verso-bg-hover);
   --background-modifier-active-hover: var(--verso-bg-hover);
   --checkbox-color: var(--verso-accent-strong);
+  --code-background: var(--verso-code-background);
   --code-normal: var(--verso-text-normal);
   --icon-color-active: var(--verso-text-normal);
   --icon-color-focused: var(--verso-text-normal);
@@ -113,6 +114,31 @@ body {
   --background-modifier-cover: rgb(0 0 0 / 50%);
   --modal-border-color: var(--verso-border-muted);
   --interactive-normal: var(--verso-bg-hover);
+}
+
+/* Obsidian caps the outer CodeMirror sizer, whose internal structure consumes
+   part of the readable width. Size the rendered blocks so the configured
+   measure describes the text itself in both editing and reading views. */
+.markdown-preview-view .markdown-preview-sizer.markdown-preview-sizer,
+.markdown-source-view.mod-cm6.is-readable-line-width .cm-content,
+.markdown-source-view.mod-cm6.is-readable-line-width .cm-sizer {
+  width: 100%;
+  max-width: 100%;
+}
+
+.markdown-preview-view.is-readable-line-width .markdown-preview-sizer > div,
+.markdown-source-view.mod-cm6.is-readable-line-width
+  [class~="cm-contentContainer"]
+  > .cm-content
+  > div,
+.markdown-source-view.mod-cm6.is-readable-line-width
+  .cm-sizer
+  > :is(.inline-title, .embedded-backlinks, .metadata-container) {
+  width: var(--verso-line-width);
+  max-width: var(--verso-max-width);
+
+  /* CodeMirror owns per-line margins, so this must win to keep every block centered. */
+  margin-inline: auto !important;
 }
 
 /* Group consecutive reading-view image embeds without affecting mixed content. */

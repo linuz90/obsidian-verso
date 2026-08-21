@@ -5,6 +5,7 @@ body {
   /* Typography */
   --font-text-size: 15px;
   --line-height-normal: 1.65;
+  --table-text-size: calc(var(--font-text-size) * 0.875);
   --verso-line-width: 42rem;
   --verso-max-width: 88%;
   --file-line-width: min(var(--verso-line-width), var(--verso-max-width));
@@ -13,10 +14,17 @@ body {
   --radius-s: 4px;
   --radius-m: 6px;
   --radius-l: 8px;
+  --tab-radius-active: 8px 8px 0 0;
+  --tab-curve: 8px;
   --divider-width: 0.5px;
   --tab-outline-width: 0.5px;
+  --hr-thickness: 1px;
   --verso-transition-duration: 120ms;
-  --verso-image-radius: var(--radius-l);
+  --verso-block-radius: var(--radius-l);
+  --verso-content-radius: 3px;
+  --verso-image-radius: var(--verso-content-radius);
+  --callout-radius: var(--verso-block-radius);
+  --code-radius: var(--verso-block-radius);
   --verso-chrome-icon-color:
     color-mix(in srgb, var(--text-muted) 72%, var(--text-faint));
   --verso-chrome-icon-color-hover: var(--text-muted);
@@ -53,6 +61,12 @@ body {
   --h6-weight: 500;
 }
 
+/* Core counts horizontal file padding inside --file-line-width. Removing it
+   keeps the configured value equal to the visible text measure. */
+.is-readable-line-width {
+  --file-margins: 1rem 0 0;
+}
+
 .theme-light {
   --verso-bg-primary: #fff;
   --verso-bg-secondary: #fafafb;
@@ -63,6 +77,8 @@ body {
   --verso-text-normal: #29292d;
   --verso-text-muted: #707177;
   --verso-text-faint: #a3a4aa;
+  --verso-code-background: #f5f5f5;
+  --verso-inline-code-background: rgb(0 0 0 / 5%);
 }
 
 /* Codex-like surfaces: airy in light mode, layered and focused in dark mode. */
@@ -73,8 +89,8 @@ body {
   --background-secondary-alt: var(--verso-bg-secondary);
   --mobile-sidebar-background: var(--verso-bg-secondary);
   --ribbon-background: var(--verso-bg-secondary);
-  --titlebar-background: var(--verso-bg-primary);
-  --titlebar-background-focused: var(--verso-bg-primary);
+  --titlebar-background: var(--verso-bg-secondary);
+  --titlebar-background-focused: var(--verso-bg-secondary);
   --workspace-background-translucent: rgb(250 250 251 / 76%);
   --divider-color: var(--verso-border-subtle);
   --tab-divider-color: var(--verso-border-subtle);
@@ -93,6 +109,8 @@ body {
   --verso-text-normal: #eeeeef;
   --verso-text-muted: #a8a9ad;
   --verso-text-faint: #747579;
+  --verso-code-background: #1b1c1d;
+  --verso-inline-code-background: rgb(255 255 255 / 7%);
 }
 
 .theme-dark {
@@ -102,8 +120,8 @@ body {
   --background-secondary-alt: var(--verso-bg-secondary);
   --mobile-sidebar-background: var(--verso-bg-secondary);
   --ribbon-background: var(--verso-bg-secondary);
-  --titlebar-background: var(--verso-bg-primary);
-  --titlebar-background-focused: var(--verso-bg-primary);
+  --titlebar-background: var(--verso-bg-secondary);
+  --titlebar-background-focused: var(--verso-bg-secondary);
   --workspace-background-translucent: rgb(24 25 26 / 86%);
   --divider-color: var(--verso-border-subtle);
   --tab-divider-color: var(--verso-border-subtle);
@@ -124,6 +142,21 @@ body:not(.is-mobile)
   .workspace-split.mod-left-split
   .workspace-sidedock-vault-profile {
   border-top: 0;
+}
+
+/* The right dock extends the document instead of introducing a second
+   navigation surface. Its divider still preserves the workspace boundary. */
+body:not(.is-mobile) .workspace-split.mod-right-split {
+  --background-secondary: var(--background-primary);
+  --background-secondary-alt: var(--background-primary);
+
+  background-color: var(--background-primary);
+  box-shadow: none;
+}
+
+body.is-translucent:not(.is-fullscreen, .is-mobile)
+  .workspace-split.mod-right-split {
+  background-color: var(--background-primary) !important;
 }
 
 body:not(.is-mobile)
@@ -163,7 +196,7 @@ body.is-translucent:not(.is-fullscreen) {
 }
 
 body.theme-light.is-translucent:not(.is-fullscreen) .workspace-split.mod-root {
-  box-shadow: -8px 0 20px rgb(0 0 0 / 3%);
+  box-shadow: -8px 0 20px rgb(0 0 0 / 2%);
   z-index: 1;
 }
 
@@ -193,6 +226,11 @@ body.theme-light.is-translucent:not(.is-fullscreen) .workspace-split.mod-root {
   font-size: var(--verso-note-identity-size);
   font-weight: var(--font-normal);
   letter-spacing: -0.01em;
+}
+
+.metadata-property-icon {
+  --icon-size: 16px;
+  --icon-stroke: 1.5px;
 }
 
 /* Keep the filename in the tab title bar quiet but legible. */
@@ -562,10 +600,110 @@ body:not(.is-mobile)
   text-underline-offset: 0.16em;
 }
 
-.markdown-rendered pre,
-.markdown-embed,
+.markdown-embed {
+  border-radius: var(--verso-block-radius);
+}
+
+.markdown-rendered :not(pre) > code,
+.cm-s-obsidian .cm-inline-code {
+  --code-background: var(--verso-inline-code-background);
+  --code-radius: var(--verso-content-radius);
+}
+
 .callout {
-  border-radius: var(--radius-l);
+  --callout-padding: 12px 16px;
+  --callout-content-padding: 8px 0 0;
+  --callout-title-size: 1em;
+  --callout-title-weight: 500;
+
+  font-size: var(--table-text-size);
+}
+
+:is(.markdown-source-view, .markdown-rendered) table :is(th, td) {
+  padding: 4px 10px;
+  border: 0;
+}
+
+:is(.markdown-source-view, .markdown-rendered) table th {
+  background-color: transparent;
+}
+
+:is(.markdown-source-view, .markdown-rendered)
+  table
+  > thead
+  > tr
+  > th,
+:is(.markdown-source-view, .markdown-rendered)
+  table
+  > tbody
+  > tr:not(:last-child)
+  > td {
+  border-bottom: 0.5px solid var(--verso-border-subtle);
+}
+
+:is(.markdown-source-view, .markdown-rendered)
+  table
+  tr
+  > :first-child {
+  padding-inline-start: 0;
+}
+
+:is(.markdown-source-view, .markdown-rendered)
+  table
+  tr
+  > :last-child {
+  padding-inline-end: 0;
+}
+
+.markdown-source-view.mod-cm6 .cm-table-widget .table-cell-wrapper {
+  padding: 4px 10px;
+}
+
+.markdown-source-view.mod-cm6
+  .cm-table-widget
+  tr
+  > :first-child
+  .table-cell-wrapper {
+  padding-inline-start: 0;
+}
+
+.markdown-source-view.mod-cm6
+  .cm-table-widget
+  tr
+  > :last-child
+  .table-cell-wrapper {
+  padding-inline-end: 0;
+}
+
+.callout-title {
+  align-items: center;
+  gap: 6px;
+}
+
+:is(.callout-icon, .callout-fold) svg {
+  width: 14px;
+  height: 14px;
+}
+
+.cm-embed-block.cm-callout .edit-block-button {
+  color: var(--text-muted);
+  opacity: 0.7;
+  transition:
+    color var(--verso-transition-duration) ease,
+    opacity var(--verso-transition-duration) ease;
+}
+
+.cm-embed-block.cm-callout .edit-block-button:hover {
+  color: var(--text-muted);
+  opacity: 0.9;
+}
+
+.callout-content > :first-child {
+  margin-block-start: 0;
+}
+
+.callout-content > :last-child {
+  margin-block-end: 0;
 }
 
 @media (width <= 600px) {
@@ -573,5 +711,9 @@ body:not(.is-mobile)
     --font-text-size: 16px;
     --verso-line-width: 100%;
     --verso-max-width: 100%;
+  }
+
+  .is-readable-line-width {
+    --file-margins: 1rem var(--file-margins-x) 0;
   }
 }

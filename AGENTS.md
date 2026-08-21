@@ -34,6 +34,7 @@ scripts/check-theme-contracts.mjs — Guards standalone size, palette, and setti
 scripts/normalize-theme.mjs — Produces scanner-compliant CSS
 LICENSE-Minimal        — Upstream MIT license
 README.md              — Project description
+CONTRIBUTING.md        — Local setup and development workflow
 PUBLISHING.md          — Release and Community Directory checklist
 screenshots/           — Public preview assets
 ```
