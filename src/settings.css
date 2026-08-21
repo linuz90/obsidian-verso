@@ -1,0 +1,56 @@
+/* @settings
+
+name: Verso
+id: verso-style
+settings:
+  -
+    id: verso-typography
+    title: Typography and layout
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: line-height-normal
+    title: Line height
+    type: variable-number-slider
+    default: 1.65
+    min: 1.2
+    max: 2
+    step: 0.05
+  -
+    id: verso-line-width
+    title: Normal line width
+    type: variable-number-slider
+    default: 42
+    min: 24
+    max: 72
+    step: 1
+    format: rem
+  -
+    id: verso-max-width
+    title: Maximum pane width
+    type: variable-number-slider
+    default: 88
+    min: 60
+    max: 100
+    step: 1
+    format: '%'
+  -
+    id: verso-features
+    title: Features
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: verso-natural-media-width
+    title: Natural media width
+    description: Keep images and videos at their natural width instead of filling the readable line.
+    type: class-toggle
+    default: false
+  -
+    id: verso-image-grid-off
+    title: Disable image grids
+    description: Show consecutive images normally instead of arranging them in a responsive grid.
+    type: class-toggle
+    default: false
+*/

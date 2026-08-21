@@ -1,0 +1,173 @@
+/*
+Verso standalone foundation for Obsidian 1.13+.
+
+Verso began as a visual fork of Minimal by Steph Ango (@kepano). Small
+MIT-licensed portions of its semantic color mapping and image-grid behavior
+remain adapted here; Verso otherwise targets current Obsidian APIs directly.
+
+Copyright (c) 2026 Fabrizio Rinaldi
+Minimal-derived portions copyright (c) 2020-2026 Steph Ango (@kepano)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+body {
+  --blockquote-style: normal;
+  --blockquote-color: var(--text-muted);
+  --blockquote-border-thickness: 1px;
+  --blockquote-border-color: var(--quote-opening-modifier);
+  --embed-block-shadow-hover: none;
+  --list-spacing: 0.075em;
+  --p-spacing: 1.75rem;
+  --verso-image-grid-fit: cover;
+  --verso-image-grid-background: transparent;
+  --verso-image-grid-gap: 0.5rem;
+  --link-decoration: underline;
+  --link-external-decoration: underline;
+}
+
+.theme-light,
+.theme-dark {
+  --color-red: #d04255;
+  --color-orange: #d5763f;
+  --color-yellow: #e5b567;
+  --color-green: #a8c373;
+  --color-cyan: #73bbb2;
+  --color-blue: #6c99bb;
+  --color-purple: #9e86c8;
+  --color-pink: #b05279;
+  --verso-accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --background-modifier-border-focus: var(--verso-border-strong);
+  --background-modifier-border-hover: var(--verso-border-muted);
+  --background-modifier-border: var(--verso-border-subtle);
+  --background-modifier-form-field: var(--verso-bg-primary);
+  --background-modifier-hover: var(--verso-bg-hover);
+  --background-modifier-active-hover: var(--verso-bg-hover);
+  --checkbox-color: var(--verso-accent-strong);
+  --code-normal: var(--verso-text-normal);
+  --icon-color-active: var(--verso-text-normal);
+  --icon-color-focused: var(--verso-text-normal);
+  --icon-color-hover: var(--verso-text-muted);
+  --icon-color: var(--verso-text-muted);
+  --interactive-normal: var(--verso-border-subtle);
+  --interactive-accent-hover: var(--verso-accent);
+  --interactive-accent: var(--verso-accent-strong);
+  --interactive-hover: var(--verso-border-subtle);
+  --list-marker-color: var(--verso-text-faint);
+  --nav-item-background-active: var(--verso-bg-hover);
+  --nav-item-background-hover: var(--verso-bg-hover);
+  --nav-item-color: var(--verso-text-muted);
+  --nav-item-color-active: var(--verso-text-normal);
+  --nav-item-color-hover: var(--verso-text-normal);
+  --nav-item-color-selected: var(--verso-text-normal);
+  --nav-collapse-icon-color: var(--verso-text-muted);
+  --nav-collapse-icon-color-collapsed: var(--verso-text-muted);
+  --nav-indentation-guide-color: var(--verso-border-subtle);
+  --quote-opening-modifier: var(--verso-border-muted);
+  --tab-text-color-focused-active: var(--verso-text-normal);
+  --text-accent-hover: var(--verso-accent-hover);
+  --text-accent: var(--verso-accent);
+  --text-error: var(--color-red);
+  --text-faint: var(--verso-text-faint);
+  --text-highlight-bg: var(--verso-highlight);
+  --text-muted: var(--verso-text-muted);
+  --text-normal: var(--verso-text-normal);
+  --text-on-accent: var(--verso-on-accent);
+  --text-selection: var(--verso-selection);
+  --titlebar-text-color-focused: var(--verso-text-normal);
+  --vault-profile-color: var(--verso-text-normal);
+  --vault-profile-color-hover: var(--verso-text-normal);
+}
+
+.theme-light {
+  --verso-accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 8%));
+  --verso-accent-strong: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 6%));
+  --verso-selection: hsl(var(--accent-h) 50% 76% / 30%);
+  --verso-highlight: rgb(255 225 0 / 50%);
+  --verso-on-accent: #fff;
+  --background-modifier-cover: rgb(0 0 0 / 20%);
+}
+
+.theme-dark {
+  --verso-accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 8%));
+  --verso-accent-strong: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 5%));
+  --verso-selection: hsl(var(--accent-h) 50% 40% / 30%);
+  --verso-highlight: rgb(255 177 80 / 30%);
+  --verso-on-accent: #fff;
+  --background-modifier-cover: rgb(0 0 0 / 50%);
+  --modal-border-color: var(--verso-border-muted);
+  --interactive-normal: var(--verso-bg-hover);
+}
+
+/* Group consecutive reading-view image embeds without affecting mixed content. */
+body:not(.verso-image-grid-off)
+  .markdown-preview-section
+  :is(div, p):has(> .image-embed ~ .image-embed) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 0 var(--verso-image-grid-gap);
+  margin-block: var(--verso-image-grid-gap);
+
+  > .image-embed {
+    display: flex;
+    align-self: stretch;
+    align-items: stretch;
+    line-height: 0;
+  }
+
+  > br {
+    display: none;
+  }
+
+  > .image-embed img {
+    width: 100%;
+    height: 100%;
+    background-color: var(--verso-image-grid-background);
+    object-fit: var(--verso-image-grid-fit);
+  }
+}
+
+/* Media fills the readable line, matching Verso's established default. */
+body:not(.verso-natural-media-width)
+  :is(.markdown-source-view, .markdown-preview-view)
+  :is(
+    .image-embed img:not(.link-favicon, .emoji, [width]),
+    img:not(.link-favicon, .emoji, [width]),
+    .external-embed,
+    audio,
+    video
+  ) {
+  width: 100%;
+}
+
+body:not(.verso-natural-media-width)
+  .image-embed:not([width])
+  .image-wrapper {
+  width: 100%;
+}
+
+:is(.markdown-source-view, .markdown-rendered) :is(video, img:not(.emoji)) {
+  border-radius: var(--verso-image-radius);
+}
+
+@media (width <= 400pt) {
+  body {
+    --verso-image-grid-gap: 0.25rem;
+  }
+}

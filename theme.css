@@ -1,0 +1,818 @@
+@charset "UTF-8";
+
+/* Generated from Verso source files; edit src/, not theme.css. */
+
+/*
+Verso standalone foundation for Obsidian 1.13+.
+
+Verso began as a visual fork of Minimal by Steph Ango (@kepano). Small
+MIT-licensed portions of its semantic color mapping and image-grid behavior
+remain adapted here; Verso otherwise targets current Obsidian APIs directly.
+
+Copyright (c) 2026 Fabrizio Rinaldi
+Minimal-derived portions copyright (c) 2020-2026 Steph Ango (@kepano)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+body {
+  --blockquote-style: normal;
+  --blockquote-color: var(--text-muted);
+  --blockquote-border-thickness: 1px;
+  --blockquote-border-color: var(--quote-opening-modifier);
+  --embed-block-shadow-hover: none;
+  --list-spacing: 0.075em;
+  --p-spacing: 1.75rem;
+  --verso-image-grid-fit: cover;
+  --verso-image-grid-background: transparent;
+  --verso-image-grid-gap: 0.5rem;
+  --link-decoration: underline;
+  --link-external-decoration: underline;
+}
+
+.theme-light,
+.theme-dark {
+  --color-red: #d04255;
+  --color-orange: #d5763f;
+  --color-yellow: #e5b567;
+  --color-green: #a8c373;
+  --color-cyan: #73bbb2;
+  --color-blue: #6c99bb;
+  --color-purple: #9e86c8;
+  --color-pink: #b05279;
+  --verso-accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --background-modifier-border-focus: var(--verso-border-strong);
+  --background-modifier-border-hover: var(--verso-border-muted);
+  --background-modifier-border: var(--verso-border-subtle);
+  --background-modifier-form-field: var(--verso-bg-primary);
+  --background-modifier-hover: var(--verso-bg-hover);
+  --background-modifier-active-hover: var(--verso-bg-hover);
+  --checkbox-color: var(--verso-accent-strong);
+  --code-normal: var(--verso-text-normal);
+  --icon-color-active: var(--verso-text-normal);
+  --icon-color-focused: var(--verso-text-normal);
+  --icon-color-hover: var(--verso-text-muted);
+  --icon-color: var(--verso-text-muted);
+  --interactive-normal: var(--verso-border-subtle);
+  --interactive-accent-hover: var(--verso-accent);
+  --interactive-accent: var(--verso-accent-strong);
+  --interactive-hover: var(--verso-border-subtle);
+  --list-marker-color: var(--verso-text-faint);
+  --nav-item-background-active: var(--verso-bg-hover);
+  --nav-item-background-hover: var(--verso-bg-hover);
+  --nav-item-color: var(--verso-text-muted);
+  --nav-item-color-active: var(--verso-text-normal);
+  --nav-item-color-hover: var(--verso-text-normal);
+  --nav-item-color-selected: var(--verso-text-normal);
+  --nav-collapse-icon-color: var(--verso-text-muted);
+  --nav-collapse-icon-color-collapsed: var(--verso-text-muted);
+  --nav-indentation-guide-color: var(--verso-border-subtle);
+  --quote-opening-modifier: var(--verso-border-muted);
+  --tab-text-color-focused-active: var(--verso-text-normal);
+  --text-accent-hover: var(--verso-accent-hover);
+  --text-accent: var(--verso-accent);
+  --text-error: var(--color-red);
+  --text-faint: var(--verso-text-faint);
+  --text-highlight-bg: var(--verso-highlight);
+  --text-muted: var(--verso-text-muted);
+  --text-normal: var(--verso-text-normal);
+  --text-on-accent: var(--verso-on-accent);
+  --text-selection: var(--verso-selection);
+  --titlebar-text-color-focused: var(--verso-text-normal);
+  --vault-profile-color: var(--verso-text-normal);
+  --vault-profile-color-hover: var(--verso-text-normal);
+}
+
+.theme-light {
+  --verso-accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 8%));
+  --verso-accent-strong: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 6%));
+  --verso-selection: hsl(var(--accent-h) 50% 76% / 30%);
+  --verso-highlight: rgb(255 225 0 / 50%);
+  --verso-on-accent: #fff;
+  --background-modifier-cover: rgb(0 0 0 / 20%);
+}
+
+.theme-dark {
+  --verso-accent-hover: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) + 8%));
+  --verso-accent-strong: hsl(var(--accent-h) var(--accent-s) calc(var(--accent-l) - 5%));
+  --verso-selection: hsl(var(--accent-h) 50% 40% / 30%);
+  --verso-highlight: rgb(255 177 80 / 30%);
+  --verso-on-accent: #fff;
+  --background-modifier-cover: rgb(0 0 0 / 50%);
+  --modal-border-color: var(--verso-border-muted);
+  --interactive-normal: var(--verso-bg-hover);
+}
+
+/* Group consecutive reading-view image embeds without affecting mixed content. */
+body:not(.verso-image-grid-off)
+  .markdown-preview-section
+  :is(div, p):has(> .image-embed ~ .image-embed) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 0 var(--verso-image-grid-gap);
+  margin-block: var(--verso-image-grid-gap);
+
+  > .image-embed {
+    display: flex;
+    align-self: stretch;
+    align-items: stretch;
+    line-height: 0;
+  }
+
+  > br {
+    display: none;
+  }
+
+  > .image-embed img {
+    width: 100%;
+    height: 100%;
+    background-color: var(--verso-image-grid-background);
+    object-fit: var(--verso-image-grid-fit);
+  }
+}
+
+/* Media fills the readable line, matching Verso's established default. */
+body:not(.verso-natural-media-width)
+  :is(.markdown-source-view, .markdown-preview-view)
+  :is(
+    .image-embed img:not(.link-favicon, .emoji, [width]),
+    img:not(.link-favicon, .emoji, [width]),
+    .external-embed,
+    audio,
+    video
+  ) {
+  width: 100%;
+}
+
+body:not(.verso-natural-media-width)
+  .image-embed:not([width])
+  .image-wrapper {
+  width: 100%;
+}
+
+:is(.markdown-source-view, .markdown-rendered) :is(video, img:not(.emoji)) {
+  border-radius: var(--verso-image-radius);
+}
+
+@media (width <= 400pt) {
+  body {
+    --verso-image-grid-gap: 0.25rem;
+  }
+}
+
+
+/* -------------------------------------------------------------------------
+   Verso visual layer
+   ------------------------------------------------------------------------- */
+
+/* Verso's visual layer. Keep component styling focused and let current Obsidian
+   provide the application behavior beneath the standalone foundation. */
+
+body {
+  /* Typography */
+  --font-text-size: 15px;
+  --line-height-normal: 1.65;
+  --verso-line-width: 42rem;
+  --verso-max-width: 88%;
+  --file-line-width: min(var(--verso-line-width), var(--verso-max-width));
+
+  /* Shape and motion */
+  --radius-s: 4px;
+  --radius-m: 6px;
+  --radius-l: 8px;
+  --divider-width: 0.5px;
+  --tab-outline-width: 0.5px;
+  --verso-transition-duration: 120ms;
+  --verso-image-radius: var(--radius-l);
+  --verso-chrome-icon-color:
+    color-mix(in srgb, var(--text-muted) 72%, var(--text-faint));
+  --verso-chrome-icon-color-hover: var(--text-muted);
+  --verso-chrome-icon-color-active:
+    color-mix(in srgb, var(--text-normal) 85%, var(--text-muted));
+  --verso-note-identity-font:
+    -apple-system, "BlinkMacSystemFont", "SF Pro Text", "Helvetica Neue",
+    sans-serif;
+  --verso-note-identity-size: 13px;
+
+  /* Titles */
+  --inline-title-margin-bottom: 0.75rem;
+  --inline-title-font: var(--verso-note-identity-font);
+  --inline-title-size: var(--verso-note-identity-size);
+  --inline-title-weight: 500;
+  --inline-title-line-height: 1.35;
+  --inline-title-color: var(--text-muted);
+  --file-header-font-size: var(--verso-note-identity-size);
+  --file-header-font-weight: 450;
+  --file-header-justify: left;
+
+  /* Headings stay distinct without competing with the note. */
+  --h1-size: 1.45em;
+  --h2-size: 1.25em;
+  --h3-size: 1.1em;
+  --h4-size: 1em;
+  --h5-size: 0.9em;
+  --h6-size: 0.85em;
+  --h1-weight: 600;
+  --h2-weight: 600;
+  --h3-weight: 550;
+  --h4-weight: 550;
+  --h5-weight: 500;
+  --h6-weight: 500;
+}
+
+.theme-light {
+  --verso-bg-primary: #fff;
+  --verso-bg-secondary: #fafafb;
+  --verso-bg-hover: rgb(24 24 27 / 5.5%);
+  --verso-border-subtle: rgb(0 0 0 / 10%);
+  --verso-border-muted: #d8d8dc;
+  --verso-border-strong: #c9c9ce;
+  --verso-text-normal: #29292d;
+  --verso-text-muted: #707177;
+  --verso-text-faint: #a3a4aa;
+}
+
+/* Codex-like surfaces: airy in light mode, layered and focused in dark mode. */
+.theme-light {
+  --background-primary: var(--verso-bg-primary);
+  --background-primary-alt: var(--verso-bg-primary);
+  --background-secondary: var(--verso-bg-secondary);
+  --background-secondary-alt: var(--verso-bg-secondary);
+  --mobile-sidebar-background: var(--verso-bg-secondary);
+  --ribbon-background: var(--verso-bg-secondary);
+  --titlebar-background: var(--verso-bg-primary);
+  --titlebar-background-focused: var(--verso-bg-primary);
+  --workspace-background-translucent: rgb(250 250 251 / 76%);
+  --divider-color: var(--verso-border-subtle);
+  --tab-divider-color: var(--verso-border-subtle);
+  --tab-outline-color: var(--verso-border-subtle);
+  --verso-prompt-shadow:
+    0 24px 64px rgb(24 24 27 / 14%), 0 4px 16px rgb(24 24 27 / 6%);
+}
+
+.theme-dark {
+  --verso-bg-primary: #111;
+  --verso-bg-secondary: #242526;
+  --verso-bg-hover: rgb(255 255 255 / 8.5%);
+  --verso-border-subtle: rgb(255 255 255 / 12%);
+  --verso-border-muted: #444549;
+  --verso-border-strong: #56575c;
+  --verso-text-normal: #eeeeef;
+  --verso-text-muted: #a8a9ad;
+  --verso-text-faint: #747579;
+}
+
+.theme-dark {
+  --background-primary: var(--verso-bg-primary);
+  --background-primary-alt: var(--verso-bg-primary);
+  --background-secondary: var(--verso-bg-secondary);
+  --background-secondary-alt: var(--verso-bg-secondary);
+  --mobile-sidebar-background: var(--verso-bg-secondary);
+  --ribbon-background: var(--verso-bg-secondary);
+  --titlebar-background: var(--verso-bg-primary);
+  --titlebar-background-focused: var(--verso-bg-primary);
+  --workspace-background-translucent: rgb(24 25 26 / 86%);
+  --divider-color: var(--verso-border-subtle);
+  --tab-divider-color: var(--verso-border-subtle);
+  --tab-outline-color: var(--verso-border-subtle);
+  --verso-prompt-shadow:
+    0 28px 72px rgb(0 0 0 / 42%), 0 4px 18px rgb(0 0 0 / 20%);
+}
+
+/* The translucent sidebar reads as one continuous material; only its edge
+   against the document needs separation. */
+body:not(.is-mobile)
+  .workspace-split.mod-left-split
+  .workspace-tab-header-container {
+  border-bottom: 0;
+}
+
+body:not(.is-mobile)
+  .workspace-split.mod-left-split
+  .workspace-sidedock-vault-profile {
+  border-top: 0;
+}
+
+body:not(.is-mobile)
+  .workspace-sidedock-vault-profile
+  .workspace-drawer-vault-name {
+  font-weight: var(--font-normal);
+}
+
+/* Define tab variables before the translucency overrides that consume them. */
+.workspace .mod-root .workspace-tabs:not(.mod-stacked) {
+  --tab-outline-width: 0.5px;
+  --tab-text-color: var(--text-muted);
+  --tab-text-color-focused: var(--text-muted);
+}
+
+/* Let macOS vibrancy show through the sidebars while the writing surface and
+   its tab strip remain a single, opaque plane. Core marks these backgrounds
+   transparent with !important, so restoring the writing plane must match it. */
+body.is-translucent:not(.is-fullscreen) .titlebar,
+body.is-translucent:not(.is-fullscreen) .workspace-split.mod-root,
+body.is-translucent:not(.is-fullscreen)
+  .workspace-split.mod-root
+  .workspace-tabs,
+body.is-translucent:not(.is-fullscreen)
+  .workspace-split.mod-root
+  .workspace-tab-header-container,
+body.is-translucent:not(.is-fullscreen)
+  .workspace-split.mod-root
+  .workspace-leaf {
+  background-color: var(--background-primary) !important;
+}
+
+/* Core translucency otherwise forces a black divider, which is too strong in
+   light mode and disappears against the dark writing surface. */
+body.is-translucent:not(.is-fullscreen) {
+  --divider-color: var(--tab-outline-color);
+}
+
+body.theme-light.is-translucent:not(.is-fullscreen) .workspace-split.mod-root {
+  box-shadow: -8px 0 20px rgb(0 0 0 / 3%);
+  z-index: 1;
+}
+
+/* The filename is context, not the document's loudest heading. */
+.inline-title {
+  padding-top: 0.75rem;
+  font-family: var(--inline-title-font);
+  font-size: var(--inline-title-size);
+  letter-spacing: -0.01em;
+  opacity: 0.72;
+  transition:
+    color var(--verso-transition-duration) ease,
+    opacity var(--verso-transition-duration) ease;
+}
+
+.inline-title:hover,
+.inline-title:focus,
+.inline-title:focus-within {
+  color: var(--text-normal);
+  opacity: 1;
+}
+
+.metadata-properties-heading,
+.metadata-properties-title {
+  color: var(--text-muted);
+  font-family: var(--verso-note-identity-font);
+  font-size: var(--verso-note-identity-size);
+  font-weight: var(--font-normal);
+  letter-spacing: -0.01em;
+}
+
+/* Keep the filename in the tab title bar quiet but legible. */
+.view-header-title-container {
+  opacity: 0.82;
+  transition: opacity var(--verso-transition-duration) ease;
+}
+
+.view-header-title-parent,
+.view-header-title {
+  color: var(--text-muted);
+  font-family: var(--verso-note-identity-font);
+  font-size: var(--file-header-font-size);
+  font-weight: var(--file-header-font-weight);
+  letter-spacing: -0.01em;
+}
+
+.view-header-title-parent .view-header-breadcrumb,
+.view-header-title-parent .view-header-breadcrumb-separator {
+  color: var(--text-muted);
+  font-family: var(--verso-note-identity-font);
+  font-size: var(--file-header-font-size);
+}
+
+.view-header-title-parent .view-header-breadcrumb-separator {
+  font-size: 0;
+}
+
+.view-header-title-parent .view-header-breadcrumb-separator::before {
+  content: "›";
+  color: var(--text-faint);
+  font-size: calc(var(--file-header-font-size) * 0.95);
+  opacity: 0.7;
+}
+
+.is-focused .workspace-leaf.mod-active .view-header-title {
+  color: var(--text-muted);
+}
+
+.view-header-title-container:hover,
+.view-header-title-container:focus-within,
+.view-header:hover .view-header-title-container {
+  opacity: 1;
+}
+
+/* Reduce document chrome contrast so the note remains the visual focus. */
+.workspace .mod-root .workspace-tab-header-inner-title {
+  color: var(--text-muted);
+  font-family: var(--verso-note-identity-font);
+  font-size: var(--verso-note-identity-size);
+  font-weight: 450;
+}
+
+.workspace
+  .mod-root
+  .workspace-tab-header.is-active
+  .workspace-tab-header-inner-title {
+  color: var(--text-normal);
+  font-weight: 500;
+}
+
+.workspace
+  .mod-root
+  .workspace-tabs:not(.mod-stacked)
+  .workspace-tab-header:not(.is-active)
+  .workspace-tab-header-inner-title {
+  color: var(--text-muted);
+}
+
+.workspace
+  .mod-root
+  .workspace-tabs:not(.mod-stacked)
+  .workspace-tab-header:not(.is-active) {
+  opacity: 0.78;
+}
+
+.workspace
+  .mod-root
+  .workspace-tabs:not(.mod-stacked)
+  .workspace-tab-header:not(.is-active):hover
+  .workspace-tab-header-inner-title {
+  color: var(--text-normal);
+}
+
+.workspace
+  .mod-root
+  .workspace-tabs:not(.mod-stacked)
+  .workspace-tab-header:not(.is-active):hover {
+  opacity: 1;
+}
+
+body:not(.is-mobile)
+  .workspace
+  .mod-root
+  .workspace-tabs:not(.mod-stacked)
+  .workspace-tab-header
+  .workspace-tab-header-inner-close-button {
+  color: var(--text-faint);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    color var(--verso-transition-duration) ease,
+    opacity var(--verso-transition-duration) ease;
+}
+
+body:not(.is-mobile)
+  .workspace
+  .mod-root
+  .workspace-tabs:not(.mod-stacked)
+  .workspace-tab-header:is(:hover, :focus-within)
+  .workspace-tab-header-inner-close-button {
+  opacity: 0.65;
+  pointer-events: auto;
+}
+
+body:not(.is-mobile)
+  .workspace
+  .mod-root
+  .workspace-tabs:not(.mod-stacked)
+  .workspace-tab-header
+  .workspace-tab-header-inner-close-button:hover {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+.nav-file-title,
+.nav-folder-title {
+  border-radius: var(--radius-m);
+  font-size: 14px;
+}
+
+/* Keep hierarchy in the spacing itself instead of drawing guide rails. */
+.nav-files-container {
+  --nav-indentation-guide-width: 0px;
+  --nav-item-weight: var(--font-normal);
+  --nav-item-weight-hover: var(--font-normal);
+  --nav-item-weight-active: var(--font-normal);
+
+  padding-inline-start: var(--size-4-2);
+}
+
+/* Core keeps a clicked file in its roving focus state. Its selected background
+   is enough feedback; non-active items retain the ring for keyboard traversal. */
+body:not(.is-phone)
+  .workspace-leaf.mod-active
+  .nav-files-container
+  .nav-file-title.is-active.has-focus:not(.is-being-renamed) {
+  box-shadow: none;
+}
+
+.nav-files-container .collapse-icon svg.svg-icon {
+  width: 9px;
+  height: 9px;
+}
+
+/* Empty-tab actions are quiet shortcuts, not primary calls to action. */
+body:not(.is-mobile)
+  .workspace-leaf-content[data-type="empty"]
+  .empty-state-action-list {
+  font-size: 13px;
+}
+
+body:not(.is-mobile)
+  .workspace-leaf-content[data-type="empty"]
+  .empty-state-action {
+  color: color-mix(in srgb, var(--text-muted) 75%, var(--text-faint));
+  font-weight: 450;
+  letter-spacing: -0.01em;
+  line-height: 32px;
+}
+
+@media (hover: hover) {
+  body:not(.is-mobile)
+    .workspace-leaf-content[data-type="empty"]
+    .empty-state-action:hover {
+    color: var(--text-muted);
+  }
+}
+
+/* Smaller glyphs with unchanged hit targets, like modern desktop toolbars. */
+body:not(.is-mobile)
+  :is(
+    .workspace-ribbon,
+    .workspace-tab-header-container,
+    .nav-header,
+    .view-header,
+    .workspace-sidedock-vault-profile
+  ) {
+  --icon-color: var(--verso-chrome-icon-color);
+  --icon-color-hover: var(--verso-chrome-icon-color-hover);
+  --icon-color-focused: var(--verso-chrome-icon-color-hover);
+  --icon-color-active: var(--verso-chrome-icon-color-active);
+  --icon-xs: 12px;
+  --icon-s: 14px;
+  --icon-m: 14px;
+  --icon-l: 16px;
+}
+
+body:not(.is-mobile)
+  .workspace-split.mod-left-split
+  .workspace-tabs.mod-top
+  .workspace-tab-header-container-inner {
+  gap: var(--size-2-2);
+}
+
+body:not(.is-mobile)
+  :is(
+    .workspace-ribbon,
+    .workspace-tab-header-container,
+    .nav-header,
+    .view-header,
+    .workspace-sidedock-vault-profile
+  )
+  :is(
+    .clickable-icon,
+    .workspace-tab-header-inner-icon,
+    .workspace-drawer-vault-switcher-icon
+) {
+  --icon-size: 14px;
+}
+
+.embedded-backlinks .nav-buttons-container {
+  --icon-size: 13px;
+
+  opacity: 0.72;
+  transition: opacity var(--verso-transition-duration) ease;
+}
+
+.embedded-backlinks .nav-buttons-container:is(:hover, :focus-within) {
+  opacity: 1;
+}
+
+/* Keep the file toolbar close to the primary navigation and align it with the
+   rest of the sidebar instead of centering a short row of controls. */
+body:not(.is-mobile)
+  .workspace-leaf-content[data-type="file-explorer"]
+  .nav-header {
+  padding-top: var(--size-4-1);
+}
+
+body:not(.is-mobile)
+  .workspace-leaf-content[data-type="file-explorer"]
+  .nav-buttons-container {
+  justify-content: flex-start;
+}
+
+/* Embedded backlinks are supporting context, not another document heading. */
+.embedded-backlinks {
+  border-top: 0.5px solid var(--verso-border-subtle);
+}
+
+.embedded-backlinks .backlink-pane > .tree-item-self,
+.embedded-backlinks .backlink-pane > .tree-item-self:hover {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 550;
+  letter-spacing: -0.01em;
+}
+
+.embedded-backlinks .backlink-pane > .tree-item-self.is-clickable.is-collapsed {
+  color: var(--text-faint);
+}
+
+.embedded-backlinks .backlink-pane > .tree-item-self .tree-item-flair,
+.embedded-backlinks .backlink-pane .search-result-file-title .tree-item-flair {
+  color: var(--text-faint);
+  font-size: 12px;
+  font-weight: 450;
+}
+
+.embedded-backlinks .backlink-pane .search-result-file-title {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.embedded-backlinks .backlink-pane .search-result .collapse-icon svg.svg-icon {
+  width: 8px;
+  height: 8px;
+  stroke-width: 3px;
+}
+
+/* Command palette and quick switcher read as a light floating sheet rather
+   than a full-size modal, while preserving Obsidian's generous hit targets. */
+body:not(.is-mobile) .prompt {
+  --prompt-border-color: var(--verso-border-subtle);
+  --prompt-border-width: 0.5px;
+  --search-clear-button-color: var(--text-faint);
+
+  border-radius: 14px;
+  box-shadow: var(--verso-prompt-shadow);
+}
+
+body:not(.is-mobile) .prompt-input-container {
+  --search-clear-button-size: 14px;
+}
+
+body:not(.is-mobile) input.prompt-input,
+body:not(.is-mobile) input.prompt-input:hover,
+body:not(.is-mobile) input.prompt-input:focus,
+body:not(.is-mobile) input.prompt-input:focus-visible {
+  border-bottom: 0.5px solid var(--verso-border-subtle);
+}
+
+body:not(.is-mobile) .prompt-results {
+  padding: 10px;
+}
+
+body:not(.is-mobile) .prompt .suggestion-item {
+  border-radius: var(--radius-m);
+}
+
+body:not(.is-mobile) .prompt-instructions {
+  display: none;
+}
+
+body:not(.is-mobile) .prompt-input-container .search-input-clear-button {
+  opacity: 0.58;
+  transition:
+    color var(--verso-transition-duration) ease,
+    opacity var(--verso-transition-duration) ease;
+}
+
+body:not(.is-mobile)
+  .prompt-input-container
+  .search-input-clear-button:is(:hover, :active) {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+/* Quiet document details, with stronger feedback only on interaction. */
+.metadata-container,
+.status-bar {
+  color: var(--text-faint);
+}
+
+/* Keep document statistics available without making them permanent chrome. */
+body:not(.is-mobile) .status-bar {
+  opacity: 0;
+  transition: opacity var(--verso-transition-duration) ease;
+}
+
+body:not(.is-mobile) .status-bar:is(:hover, :focus-within) {
+  opacity: 1;
+}
+
+body:not(.is-mobile) .status-bar-item.plugin-sync .sync-status-icon {
+  opacity: 0;
+  transition: opacity var(--verso-transition-duration) ease;
+}
+
+body:not(.is-mobile)
+  :is(
+    .status-bar:hover .status-bar-item.plugin-sync,
+    .status-bar-item.plugin-sync:hover,
+    .status-bar-item.plugin-sync:focus-within
+  )
+  .sync-status-icon {
+  opacity: 1;
+}
+
+.markdown-rendered a,
+.cm-hmd-internal-link,
+.cm-link,
+.cm-url {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+
+.markdown-rendered pre,
+.markdown-embed,
+.callout {
+  border-radius: var(--radius-l);
+}
+
+@media (width <= 600px) {
+  body {
+    --font-text-size: 16px;
+    --verso-line-width: 100%;
+    --verso-max-width: 100%;
+  }
+}
+
+
+/* @settings
+
+name: Verso
+id: verso-style
+settings:
+  -
+    id: verso-typography
+    title: Typography and layout
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: line-height-normal
+    title: Line height
+    type: variable-number-slider
+    default: 1.65
+    min: 1.2
+    max: 2
+    step: 0.05
+  -
+    id: verso-line-width
+    title: Normal line width
+    type: variable-number-slider
+    default: 42
+    min: 24
+    max: 72
+    step: 1
+    format: rem
+  -
+    id: verso-max-width
+    title: Maximum pane width
+    type: variable-number-slider
+    default: 88
+    min: 60
+    max: 100
+    step: 1
+    format: '%'
+  -
+    id: verso-features
+    title: Features
+    type: heading
+    level: 2
+    collapsed: false
+  -
+    id: verso-natural-media-width
+    title: Natural media width
+    description: Keep images and videos at their natural width instead of filling the readable line.
+    type: class-toggle
+    default: false
+  -
+    id: verso-image-grid-off
+    title: Disable image grids
+    description: Show consecutive images normally instead of arranging them in a responsive grid.
+    type: class-toggle
+    default: false
+*/

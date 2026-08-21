@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -eu
+
+theme_root=$(CDPATH='' cd -- "$(dirname -- "$0")/.." && pwd)
+theme_output=${1:-"$theme_root/theme.css"}
+theme_raw=$(mktemp "$theme_root/.theme.raw.css.XXXXXX")
+theme_temp=$(mktemp "$theme_root/.theme.css.XXXXXX")
+
+cleanup() {
+  rm -f "$theme_raw" "$theme_temp"
+}
+trap cleanup EXIT HUP INT TERM
+
+if [ ! -d "$theme_root/node_modules" ]; then
+  printf 'Missing development dependencies. Run pnpm install first.\n' >&2
+  exit 1
+fi
+
+{
+  printf '@charset "UTF-8";\n\n'
+  printf '/* Generated from Verso source files; edit src/, not theme.css. */\n\n'
+  cat "$theme_root/src/foundation.css"
+  printf '\n\n/* -------------------------------------------------------------------------\n'
+  printf '   Verso visual layer\n'
+  printf '   ------------------------------------------------------------------------- */\n\n'
+  cat "$theme_root/src/verso.css"
+  printf '\n\n'
+  cat "$theme_root/src/settings.css"
+} > "$theme_raw"
+
+node "$theme_root/scripts/normalize-theme.mjs" "$theme_raw" "$theme_temp"
+
+# mktemp creates mode 0600; the generated theme is a distributable asset.
+chmod 644 "$theme_temp"
+mv "$theme_temp" "$theme_output"
+rm -f "$theme_raw"
+trap - EXIT HUP INT TERM
+
+printf 'Built %s\n' "$theme_output"

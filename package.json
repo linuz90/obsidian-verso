@@ -1,0 +1,19 @@
+{
+  "name": "obsidian-verso",
+  "private": true,
+  "packageManager": "pnpm@10.33.0",
+  "scripts": {
+    "build": "scripts/build-theme",
+    "check": "scripts/check-theme && pnpm run check:contracts && pnpm run lint",
+    "check:contracts": "node scripts/check-theme-contracts.mjs",
+    "lint": "stylelint \"src/**/*.css\" theme.css --config stylelint.config.mjs"
+  },
+  "devDependencies": {
+    "postcss": "8.5.26",
+    "postcss-selector-parser": "7.1.5",
+    "stylelint": "17.14.1",
+    "stylelint-config-obsidianmd": "0.1.0",
+    "stylelint-config-standard": "40.0.0",
+    "stylelint-no-unsupported-browser-features": "8.1.1"
+  }
+}
