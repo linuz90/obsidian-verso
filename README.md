@@ -14,9 +14,9 @@ This is a third-party community theme and is not affiliated with Obsidian or Ope
 
 ## Install
 
-### From the Obsidian theme directory
+### From the Obsidian Community directory
 
-Once Verso is listed, open **Settings → Appearance → Themes → Manage**, search for **Verso**, and select **Install and use**.
+Install [Verso from the Obsidian Community directory](https://community.obsidian.md/themes/verso). You can also open **Settings → Appearance → Themes → Manage** in Obsidian, search for **Verso**, and select **Install and use**.
 
 ### Manually from a GitHub release
 
