@@ -6,6 +6,8 @@ A quiet, native-feeling standalone Obsidian theme by [Fabrizio Rinaldi](https://
 
 ![Verso in light mode](./screenshots/verso.png)
 
+![Verso in dark mode](./screenshots/verso-dark.png)
+
 Verso refines the app as a whole with **a cleaner palette, subtler iconography, quieter details, and a more native macOS feel.**
 
 This is a third-party community theme and is not affiliated with Obsidian or OpenAI.
