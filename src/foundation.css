@@ -138,10 +138,12 @@ body {
   max-width: var(--verso-max-width);
 
   /* CodeMirror owns per-line margins, so this must win to keep every block centered. */
+  /* stylelint-disable-next-line declaration-no-important -- CodeMirror sets these margins inline. */
   margin-inline: auto !important;
 }
 
 /* Group consecutive reading-view image embeds without affecting mixed content. */
+/* stylelint-disable selector-pseudo-class-disallowed-list -- CSS has no other way to select only parents with multiple embeds. */
 body:not(.verso-image-grid-off)
   .markdown-preview-section
   :is(div, p):has(> .image-embed ~ .image-embed) {
@@ -168,6 +170,7 @@ body:not(.verso-image-grid-off)
     object-fit: var(--verso-image-grid-fit);
   }
 }
+/* stylelint-enable selector-pseudo-class-disallowed-list */
 
 /* Media fills the readable line, matching Verso's established default. */
 body:not(.verso-natural-media-width)

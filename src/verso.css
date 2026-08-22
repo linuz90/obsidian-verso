@@ -156,6 +156,7 @@ body:not(.is-mobile) .workspace-split.mod-right-split {
 
 body.is-translucent:not(.is-fullscreen, .is-mobile)
   .workspace-split.mod-right-split {
+  /* stylelint-disable-next-line declaration-no-important -- Core translucency uses an important background override. */
   background-color: var(--background-primary) !important;
 }
 
@@ -186,6 +187,7 @@ body.is-translucent:not(.is-fullscreen)
 body.is-translucent:not(.is-fullscreen)
   .workspace-split.mod-root
   .workspace-leaf {
+  /* stylelint-disable-next-line declaration-no-important -- Core translucency uses important background overrides. */
   background-color: var(--background-primary) !important;
 }
 
@@ -596,6 +598,7 @@ body:not(.is-mobile)
 .cm-hmd-internal-link,
 .cm-link,
 .cm-url {
+  /* stylelint-disable-next-line plugin/no-unsupported-browser-features -- The scanner flags the whole feature; fixed lengths work in supported Electron. */
   text-decoration-thickness: 1px;
   text-underline-offset: 0.16em;
 }
