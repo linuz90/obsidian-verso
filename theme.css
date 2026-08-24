@@ -353,6 +353,18 @@ body {
     0 28px 72px rgb(0 0 0 / 42%), 0 4px 18px rgb(0 0 0 / 20%);
 }
 
+/* A collapsed ribbon belongs to the document chrome, including its titlebar
+   cap, and should read as one continuous strip. */
+body:not(.is-mobile) .workspace-ribbon.mod-left.is-collapsed {
+  --titlebar-background: var(--ribbon-background-collapsed);
+
+  transition: none;
+}
+
+body:not(.is-mobile) .workspace-ribbon.mod-left.is-collapsed::before {
+  border-bottom: 0;
+}
+
 /* The translucent sidebar reads as one continuous material; only its edge
    against the document needs separation. */
 body:not(.is-mobile)
@@ -424,9 +436,14 @@ body.verso-workspace-borders-off
   --tab-outline-width: 0;
 }
 
-/* Let macOS vibrancy show through the sidebars while the writing surface and
-   its tab strip remain a single, opaque plane. Core marks these backgrounds
-   transparent with !important, so restoring the writing plane must match it. */
+/* Let macOS vibrancy show through open sidebars while the writing surface,
+   its tab strip, and a collapsed ribbon remain a single, opaque plane. Core
+   marks these backgrounds transparent with !important, so restoring the
+   writing plane must match it. */
+body.is-translucent:not(.is-fullscreen)
+  .workspace-ribbon.mod-left.is-collapsed,
+body.is-translucent:not(.is-fullscreen)
+  .workspace-ribbon.mod-left.is-collapsed::before,
 body.is-translucent:not(.is-fullscreen) .titlebar,
 body.is-translucent:not(.is-fullscreen) .workspace-split.mod-root,
 body.is-translucent:not(.is-fullscreen)
