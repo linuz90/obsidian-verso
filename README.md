@@ -1,16 +1,18 @@
 # Verso
 
-A quiet, native-feeling standalone Obsidian theme by [Fabrizio Rinaldi](https://x.com/linuz90), inspired by the [Codex app](https://openai.com/codex/) and the clarity of [Minimal](https://github.com/kepano/obsidian-minimal) by Steph Ango (`@kepano`).
+A quiet, native-feeling standalone Obsidian theme by [Fabrizio Rinaldi](https://x.com/linuz90), inspired by the Codex Mac app and originally based on Steph Ango's [Minimal](https://github.com/kepano/obsidian-minimal) theme.
 
-> *Verso*: the reverse side of a leaf, the left-hand page of an open book—and, in Italian, a line of poetry.
+> _Verso_: the reverse side of a leaf, the left-hand page of an open book. Or in Italian, a line of poetry.
+
+Verso refines the app as a whole with **a cleaner palette, subtler iconography, quieter details, and a more native macOS feel.**
+
+You can also customize Verso with the optional [Style Settings plugin](https://community.obsidian.md/plugins/obsidian-style-settings), which exposes a small, intentional set of controls.
+
+This is a third-party community theme and is not affiliated with Obsidian or OpenAI.
 
 ![Verso in light mode](./screenshots/verso.png)
 
 ![Verso in dark mode](./screenshots/verso-dark.png)
-
-Verso refines the app as a whole with **a cleaner palette, subtler iconography, quieter details, and a more native macOS feel.**
-
-This is a third-party community theme and is not affiliated with Obsidian or OpenAI.
 
 ## Install
 
@@ -59,7 +61,7 @@ Verso uses Obsidian's native system font stacks for interface, text, editor, and
 
 ## Customization
 
-Verso supports the generic [Style Settings](https://github.com/community-archive/obsidian-style-settings) plugin with a small theme-specific panel. It exposes line height, readable line width, maximum pane width, natural media sizing, and image-grid behavior while keeping the core palette intentional. Primary navigation stays on Obsidian's standard compact layout.
+The theme-specific Style Settings panel exposes line height, readable line width, maximum pane width, natural media sizing, image-grid behavior, and an optional borderless workspace while keeping the core palette intentional. Primary navigation stays on Obsidian's standard compact layout.
 
 ## Development
 

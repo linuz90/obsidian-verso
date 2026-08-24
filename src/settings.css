@@ -53,4 +53,10 @@ settings:
     description: Show consecutive images normally instead of arranging them in a responsive grid.
     type: class-toggle
     default: false
+  -
+    id: verso-workspace-borders-off
+    title: Hide workspace borders
+    description: Remove divider lines and tab outlines for a flatter workspace.
+    type: class-toggle
+    default: false
 */

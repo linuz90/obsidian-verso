@@ -412,6 +412,18 @@ body:not(.is-mobile)
   --tab-text-color-focused: var(--text-muted);
 }
 
+body.verso-workspace-borders-off {
+  --divider-width: 0;
+  --tab-outline-width: 0;
+}
+
+body.verso-workspace-borders-off
+  .workspace
+  .mod-root
+  .workspace-tabs:not(.mod-stacked) {
+  --tab-outline-width: 0;
+}
+
 /* Let macOS vibrancy show through the sidebars while the writing surface and
    its tab strip remain a single, opaque plane. Core marks these backgrounds
    transparent with !important, so restoring the writing plane must match it. */
@@ -1039,6 +1051,12 @@ settings:
     id: verso-image-grid-off
     title: Disable image grids
     description: Show consecutive images normally instead of arranging them in a responsive grid.
+    type: class-toggle
+    default: false
+  -
+    id: verso-workspace-borders-off
+    title: Hide workspace borders
+    description: Remove divider lines and tab outlines for a flatter workspace.
     type: class-toggle
     default: false
 */
