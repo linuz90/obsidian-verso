@@ -1049,7 +1049,52 @@ body:not(.is-mobile)
 }
 
 .markdown-embed {
+  --verso-embed-border-color:
+    color-mix(in srgb, var(--verso-border-subtle) 70%, transparent);
+  --embed-border-start: 1px solid var(--verso-embed-border-color);
+  --embed-border-end: 1px solid var(--verso-embed-border-color);
+  --embed-border-top: 1px solid var(--verso-embed-border-color);
+  --embed-border-bottom: 1px solid var(--verso-embed-border-color);
+  --embed-padding: var(--size-4-3) var(--size-4-4);
+
   border-radius: var(--verso-block-radius);
+}
+
+.markdown-embed .embed-title {
+  color: var(--text-muted);
+  font-family: var(--verso-note-identity-font);
+  font-size: var(--verso-note-identity-size);
+  font-weight: 500;
+}
+
+.markdown-embed > .markdown-embed-link {
+  /* Account for the icon button's own padding when aligning the header. */
+  top: calc(var(--size-4-3) - var(--size-2-1));
+  inset-inline-end: var(--size-4-3);
+  color: var(--text-faint);
+}
+
+.markdown-embed > .markdown-embed-link:is(:hover, :focus-visible) {
+  color: var(--text-muted);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  body:not(.is-mobile) .markdown-embed > .markdown-embed-link {
+    opacity: 0;
+    transition: opacity var(--verso-transition-duration) ease;
+  }
+
+  body:not(.is-mobile)
+    .markdown-embed:is(:hover, :focus-within)
+    > .markdown-embed-link {
+    opacity: var(--icon-opacity);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body:not(.is-mobile) .markdown-embed > .markdown-embed-link {
+    transition: none;
+  }
 }
 
 .markdown-rendered :not(pre) > code,
