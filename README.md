@@ -18,6 +18,8 @@ This is a third-party community theme and is not affiliated with Obsidian or Ope
 
 ![Verso in dark mode](./screenshots/verso-dark.png)
 
+![A Mermaid diagram extends beyond the text column in Verso](./screenshots/verso-mermaid.png)
+
 ## Install
 
 ### From the Obsidian Community directory
