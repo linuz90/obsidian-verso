@@ -8,6 +8,8 @@ Verso refines the app as a whole with **a cleaner palette, subtler iconography, 
 
 On desktop, tables and Mermaid diagrams can use extra horizontal space while your text stays in a comfortable reading column. Oversized content scrolls within its block, with subtle edge fades where supported.
 
+Embedded notes use soft borders, comfortable padding, and subdued titles. Their open-note button appears on hover or keyboard focus on desktop, and stays visible on touch devices.
+
 The optional [Style Settings plugin](https://community.obsidian.md/plugins/obsidian-style-settings) lets you adjust text spacing and width, keep diagrams and tables at text width, change image sizing and layout, and hide pane and tab borders.
 
 This is a third-party community theme and is not affiliated with Obsidian or OpenAI.
