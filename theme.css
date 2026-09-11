@@ -220,6 +220,36 @@ body:not(.verso-natural-media-width)
 /* Verso's visual layer. Keep component styling focused and let current Obsidian
    provide the application behavior beneath the standalone foundation. */
 
+@property --verso-scroll-mask-start {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --verso-scroll-mask-end {
+  syntax: "<length>";
+  inherits: false;
+  initial-value: 0;
+}
+
+@keyframes verso-horizontal-scroll-mask {
+  0% {
+    --verso-scroll-mask-start: 0px;
+    --verso-scroll-mask-end: var(--verso-scroll-mask-size);
+  }
+
+  2%,
+  98% {
+    --verso-scroll-mask-start: var(--verso-scroll-mask-size);
+    --verso-scroll-mask-end: var(--verso-scroll-mask-size);
+  }
+
+  100% {
+    --verso-scroll-mask-start: var(--verso-scroll-mask-size);
+    --verso-scroll-mask-end: 0px;
+  }
+}
+
 body {
   /* Typography */
   --font-text-size: 15px;
@@ -228,6 +258,11 @@ body {
   --verso-line-width: 42rem;
   --verso-max-width: 88%;
   --file-line-width: min(var(--verso-line-width), var(--verso-max-width));
+  --verso-wide-block-gutter: clamp(1.5rem, 4cqi, 4rem);
+  --verso-wide-block-width: calc(
+    100cqi - var(--verso-wide-block-gutter) - var(--verso-wide-block-gutter)
+  );
+  --verso-scroll-mask-size: 24px;
 
   /* Shape and motion */
   --radius-s: 4px;
@@ -284,6 +319,119 @@ body {
    keeps the configured value equal to the visible text measure. */
 .is-readable-line-width {
   --file-margins: 1rem 0 0;
+}
+
+/* Limit pane-relative sizing to desktop notes; embeds keep their own layout. */
+@media screen {
+  body:not(.is-mobile) :is(
+    .markdown-preview-view,
+    .markdown-source-view.mod-cm6
+  ).is-readable-line-width:not(.markdown-embed *) {
+    container-type: inline-size;
+  }
+
+  body:not(.is-mobile)
+    .markdown-preview-view.is-readable-line-width
+    .mermaid {
+    overflow-x: auto;
+  }
+
+  body:not(.is-mobile, .verso-mermaid-wide-off)
+    .markdown-source-view.mod-cm6.is-readable-line-width:not(.markdown-embed *)
+    .cm-content
+    > .cm-lang-mermaid,
+  body:not(.is-mobile, .verso-mermaid-wide-off)
+    .markdown-preview-view.is-readable-line-width:not(.markdown-embed *)
+    > .markdown-preview-sizer > .el-pre > .mermaid {
+    position: relative;
+    left: 50%;
+    width: max-content;
+    max-width: var(--verso-wide-block-width);
+    transform: translateX(-50%);
+  }
+
+  /* Keep compact tables aligned with the prose while giving dense tables room
+     to grow, with local scrolling only after the wider pane is exhausted. */
+  body:not(.is-mobile, .verso-table-wide-off)
+    .markdown-source-view.mod-cm6.is-readable-line-width:not(.markdown-embed *)
+    .cm-content
+    > .cm-table-widget,
+  body:not(.is-mobile, .verso-table-wide-off)
+    .markdown-preview-view.is-readable-line-width:not(.markdown-embed *)
+    > .markdown-preview-sizer
+    > .el-table {
+    width: max-content;
+    min-width: min(var(--file-line-width), var(--verso-wide-block-width));
+    max-width: var(--verso-wide-block-width);
+    overflow-x: auto;
+  }
+
+  body:not(.is-mobile, .verso-table-wide-off)
+    .markdown-source-view.mod-cm6.is-readable-line-width:not(.markdown-embed *)
+    .cm-content
+    > .cm-table-widget {
+    /* Core offsets the widget by its drag-handle padding on both sides. */
+    min-width: min(
+      calc(100% + 2 * var(--table-drag-handle-size)),
+      calc(var(--verso-wide-block-width) + 2 * var(--table-drag-handle-size))
+    );
+    max-width: calc(var(--verso-wide-block-width) + 2 * var(--table-drag-handle-size));
+    position: relative;
+    left: calc(50% + var(--table-drag-handle-size));
+    transform: translateX(-50%);
+  }
+
+  body:not(.is-mobile, .verso-table-wide-off)
+    .markdown-preview-view.is-readable-line-width:not(.markdown-embed *)
+    > .markdown-preview-sizer
+    > .el-table {
+    margin-inline: auto;
+  }
+
+  /* An inactive scroll timeline leaves both mask edges fully opaque. */
+  @supports (animation-timeline: scroll(self inline)) {
+    body:not(.is-mobile)
+      :is(
+        .markdown-preview-view,
+        .markdown-source-view.mod-cm6
+      ).is-readable-line-width
+      .mermaid,
+    body:not(.is-mobile)
+      .markdown-source-view.mod-cm6.is-readable-line-width
+      .cm-content
+      > .cm-table-widget,
+    body:not(.is-mobile)
+      .markdown-preview-view.is-readable-line-width
+      .markdown-preview-sizer
+      > .el-table {
+      mask-image: linear-gradient(
+        to right,
+        transparent 0,
+        #000 var(--verso-scroll-mask-start),
+        #000 calc(100% - var(--verso-scroll-mask-end)),
+        transparent 100%
+      );
+      animation: verso-horizontal-scroll-mask 1s linear both;
+      animation-timeline: scroll(self inline);
+    }
+
+    body:not(.is-mobile)
+      :is(
+        .markdown-preview-view,
+        .markdown-source-view.mod-cm6
+      ).is-readable-line-width
+      .mermaid:dir(rtl),
+    body:not(.is-mobile)
+      .markdown-source-view.mod-cm6.is-readable-line-width
+      .cm-content
+      > .cm-table-widget:dir(rtl),
+    body:not(.is-mobile)
+      .markdown-preview-view.is-readable-line-width
+      .markdown-preview-sizer
+      > .el-table:dir(rtl) {
+      animation-direction: reverse;
+    }
+  }
 }
 
 .theme-light {
@@ -388,6 +536,10 @@ body:not(.is-mobile, .is-translucent)
 
 /* The right dock extends the document instead of introducing a second
    navigation surface. Its divider still preserves the workspace boundary. */
+body:not(.is-mobile) .sidebar-toggle-button.mod-right {
+  --tab-container-background: var(--background-primary);
+}
+
 body:not(.is-mobile) .workspace-split.mod-right-split {
   --background-secondary: var(--background-primary);
   --background-secondary-alt: var(--background-primary);
@@ -1022,13 +1174,14 @@ id: verso-style
 settings:
   -
     id: verso-typography
-    title: Typography and layout
+    title: Text layout
     type: heading
     level: 2
     collapsed: false
   -
     id: line-height-normal
-    title: Line height
+    title: Line spacing
+    description: Adjust the vertical space between lines of note text.
     type: variable-number-slider
     default: 1.65
     min: 1.2
@@ -1036,7 +1189,8 @@ settings:
     step: 0.05
   -
     id: verso-line-width
-    title: Normal line width
+    title: Text column width
+    description: Set the preferred width of regular note text.
     type: variable-number-slider
     default: 42
     min: 24
@@ -1045,7 +1199,8 @@ settings:
     format: rem
   -
     id: verso-max-width
-    title: Maximum pane width
+    title: Maximum text width
+    description: Limit the text column to this percentage of the pane when space is tight.
     type: variable-number-slider
     default: 88
     min: 60
@@ -1054,26 +1209,38 @@ settings:
     format: '%'
   -
     id: verso-features
-    title: Features
+    title: Content and workspace
     type: heading
     level: 2
     collapsed: false
   -
     id: verso-natural-media-width
-    title: Natural media width
-    description: Keep images and videos at their natural width instead of filling the readable line.
+    title: Keep small images and videos compact
+    description: Do not enlarge them to fill the text column. Large images and videos still shrink to fit.
     type: class-toggle
     default: false
   -
     id: verso-image-grid-off
-    title: Disable image grids
-    description: Show consecutive images normally instead of arranging them in a responsive grid.
+    title: Stack consecutive images
+    description: Place consecutive images one below another instead of arranging them side by side.
+    type: class-toggle
+    default: false
+  -
+    id: verso-mermaid-wide-off
+    title: Keep Mermaid diagrams at text width
+    description: Turn off the wider layout so oversized diagrams scroll inside the regular text column.
+    type: class-toggle
+    default: false
+  -
+    id: verso-table-wide-off
+    title: Keep tables at text width
+    description: Turn off the wider layout so dense tables scroll inside the regular text column.
     type: class-toggle
     default: false
   -
     id: verso-workspace-borders-off
-    title: Hide workspace borders
-    description: Remove divider lines and tab outlines for a flatter workspace.
+    title: Hide pane and tab borders
+    description: Remove divider lines between panes and outlines around tabs.
     type: class-toggle
     default: false
 */

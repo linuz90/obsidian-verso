@@ -6,7 +6,9 @@ A quiet, native-feeling standalone Obsidian theme by [Fabrizio Rinaldi](https://
 
 Verso refines the app as a whole with **a cleaner palette, subtler iconography, quieter details, and a more native macOS feel.**
 
-You can also customize Verso with the optional [Style Settings plugin](https://community.obsidian.md/plugins/obsidian-style-settings), which exposes a small, intentional set of controls.
+On desktop, tables and Mermaid diagrams can use extra horizontal space while your text stays in a comfortable reading column. Oversized content scrolls within its block, with subtle edge fades where supported.
+
+The optional [Style Settings plugin](https://community.obsidian.md/plugins/obsidian-style-settings) lets you adjust text spacing and width, keep diagrams and tables at text width, change image sizing and layout, and hide pane and tab borders.
 
 This is a third-party community theme and is not affiliated with Obsidian or OpenAI.
 
@@ -61,7 +63,15 @@ Verso uses Obsidian's native system font stacks for interface, text, editor, and
 
 ## Customization
 
-The theme-specific Style Settings panel exposes line height, readable line width, maximum pane width, natural media sizing, image-grid behavior, and an optional borderless workspace while keeping the core palette intentional. Primary navigation stays on Obsidian's standard compact layout.
+After enabling Style Settings, open **Settings → Style Settings → Verso**. The theme works without the plugin; these controls are optional.
+
+- **Line spacing** controls the vertical space between lines. **Text column width** and **Maximum text width** control the reading column with Readable line length enabled.
+- **Keep small images and videos compact** stops small media from being enlarged to fill the text column.
+- **Stack consecutive images** disables the automatic side-by-side image grid in Reading View.
+- **Keep Mermaid diagrams at text width** and **Keep tables at text width** independently disable the wider desktop layout.
+- **Hide pane and tab borders** removes pane dividers and tab outlines.
+
+With **Readable line length** enabled on desktop, top-level tables and Mermaid diagrams grow to fit their content, using the available pane width when needed. Side gutters adapt to the pane size; compact tables remain aligned with the text, and compact diagrams stay centered. Content inside callouts and embedded notes keeps its containing layout. If a block still overflows, it scrolls horizontally. On supported desktop installers, an edge fade indicates where more content remains to scroll. Mobile keeps Obsidian's normal content layout.
 
 ## Development
 

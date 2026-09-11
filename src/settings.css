@@ -5,13 +5,14 @@ id: verso-style
 settings:
   -
     id: verso-typography
-    title: Typography and layout
+    title: Text layout
     type: heading
     level: 2
     collapsed: false
   -
     id: line-height-normal
-    title: Line height
+    title: Line spacing
+    description: Adjust the vertical space between lines of note text.
     type: variable-number-slider
     default: 1.65
     min: 1.2
@@ -19,7 +20,8 @@ settings:
     step: 0.05
   -
     id: verso-line-width
-    title: Normal line width
+    title: Text column width
+    description: Set the preferred width of regular note text.
     type: variable-number-slider
     default: 42
     min: 24
@@ -28,7 +30,8 @@ settings:
     format: rem
   -
     id: verso-max-width
-    title: Maximum pane width
+    title: Maximum text width
+    description: Limit the text column to this percentage of the pane when space is tight.
     type: variable-number-slider
     default: 88
     min: 60
@@ -37,26 +40,38 @@ settings:
     format: '%'
   -
     id: verso-features
-    title: Features
+    title: Content and workspace
     type: heading
     level: 2
     collapsed: false
   -
     id: verso-natural-media-width
-    title: Natural media width
-    description: Keep images and videos at their natural width instead of filling the readable line.
+    title: Keep small images and videos compact
+    description: Do not enlarge them to fill the text column. Large images and videos still shrink to fit.
     type: class-toggle
     default: false
   -
     id: verso-image-grid-off
-    title: Disable image grids
-    description: Show consecutive images normally instead of arranging them in a responsive grid.
+    title: Stack consecutive images
+    description: Place consecutive images one below another instead of arranging them side by side.
+    type: class-toggle
+    default: false
+  -
+    id: verso-mermaid-wide-off
+    title: Keep Mermaid diagrams at text width
+    description: Turn off the wider layout so oversized diagrams scroll inside the regular text column.
+    type: class-toggle
+    default: false
+  -
+    id: verso-table-wide-off
+    title: Keep tables at text width
+    description: Turn off the wider layout so dense tables scroll inside the regular text column.
     type: class-toggle
     default: false
   -
     id: verso-workspace-borders-off
-    title: Hide workspace borders
-    description: Remove divider lines and tab outlines for a flatter workspace.
+    title: Hide pane and tab borders
+    description: Remove divider lines between panes and outlines around tabs.
     type: class-toggle
     default: false
 */
