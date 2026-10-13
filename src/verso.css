@@ -131,6 +131,24 @@ body {
     transform: translateX(-50%);
   }
 
+  /* Core renders pie, gantt, class, state, and journey diagrams at 100% width
+     capped by an inline max-width; inside the max-content wrapper that
+     percentage would collapse to the 300px replaced-element fallback. */
+  body:not(.is-mobile, .verso-mermaid-wide-off)
+    .markdown-preview-view.is-readable-line-width:not(.markdown-embed *)
+    > .markdown-preview-sizer > .el-pre > .mermaid > svg[width="100%"] {
+    width: var(--verso-wide-block-width);
+  }
+
+  body:not(.is-mobile, .verso-mermaid-wide-off)
+    .markdown-source-view.mod-cm6.is-readable-line-width:not(.markdown-embed *)
+    .cm-content
+    > .cm-lang-mermaid
+    .mermaid
+    > svg[width="100%"] {
+    width: var(--verso-wide-block-width);
+  }
+
   /* Keep compact tables aligned with the prose while giving dense tables room
      to grow, with local scrolling only after the wider pane is exhausted. */
   body:not(.is-mobile, .verso-table-wide-off)
