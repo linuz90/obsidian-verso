@@ -333,6 +333,13 @@ body:not(.is-mobile, .is-translucent)
   background-color: var(--background-primary);
 }
 
+/* Windows and Linux draw their window controls over the top-right tab strip,
+   which is always on the document plane, not core's titlebar surface (#1). */
+body.is-hidden-frameless .titlebar-button-container.mod-right {
+  --titlebar-background: var(--background-primary);
+  --titlebar-background-focused: var(--background-primary);
+}
+
 /* The right dock extends the document instead of introducing a second
    navigation surface. Its divider still preserves the workspace boundary. */
 body:not(.is-mobile) .sidebar-toggle-button.mod-right {
