@@ -1,0 +1,15 @@
+version = 1
+name = "obsidian-verso"
+
+[setup]
+script = "pnpm install --frozen-lockfile"
+
+[[actions]]
+name = "Build"
+icon = "tool"
+command = "pnpm build"
+
+[[actions]]
+name = "Check"
+icon = "test"
+command = "pnpm check"
