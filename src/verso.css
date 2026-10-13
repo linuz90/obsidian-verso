@@ -844,6 +844,11 @@ body:not(.is-mobile) .status-bar:is(:hover, :focus-within) {
   opacity: 1;
 }
 
+/* Optional: keep the status bar visible for writers who track word count. */
+body.verso-status-bar-visible:not(.is-mobile) .status-bar {
+  opacity: 1;
+}
+
 body:not(.is-mobile) .status-bar-item.plugin-sync .sync-status-icon {
   opacity: 0;
   transition: opacity var(--verso-transition-duration) ease;

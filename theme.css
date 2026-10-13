@@ -1076,6 +1076,11 @@ body:not(.is-mobile) .status-bar:is(:hover, :focus-within) {
   opacity: 1;
 }
 
+/* Optional: keep the status bar visible for writers who track word count. */
+body.verso-status-bar-visible:not(.is-mobile) .status-bar {
+  opacity: 1;
+}
+
 body:not(.is-mobile) .status-bar-item.plugin-sync .sync-status-icon {
   opacity: 0;
   transition: opacity var(--verso-transition-duration) ease;
@@ -1340,6 +1345,12 @@ settings:
     id: verso-workspace-borders-off
     title: Hide pane and tab borders
     description: Remove divider lines between panes and outlines around tabs.
+    type: class-toggle
+    default: false
+  -
+    id: verso-status-bar-visible
+    title: Always show status bar
+    description: Keep word count and other status bar items visible instead of revealing them on hover.
     type: class-toggle
     default: false
 */

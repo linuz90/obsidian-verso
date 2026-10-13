@@ -10,7 +10,7 @@ On desktop, tables and Mermaid diagrams can use extra horizontal space while you
 
 Embedded notes use soft borders, comfortable padding, and subdued titles. Their open-note button appears on hover or keyboard focus on desktop, and stays visible on touch devices.
 
-The optional [Style Settings plugin](https://community.obsidian.md/plugins/obsidian-style-settings) lets you adjust text spacing and width, keep diagrams and tables at text width, change image sizing and layout, and hide pane and tab borders.
+The optional [Style Settings plugin](https://community.obsidian.md/plugins/obsidian-style-settings) lets you adjust text spacing and width, keep diagrams and tables at text width, change image sizing and layout, hide pane and tab borders, and keep the status bar always visible.
 
 This is a third-party community theme and is not affiliated with Obsidian or OpenAI.
 
@@ -74,6 +74,7 @@ After enabling Style Settings, open **Settings → Style Settings → Verso**. T
 - **Stack consecutive images** disables the automatic side-by-side image grid in Reading View.
 - **Keep Mermaid diagrams at text width** and **Keep tables at text width** independently disable the wider desktop layout.
 - **Hide pane and tab borders** removes pane dividers and tab outlines.
+- **Always show status bar** keeps word count and other status bar items visible instead of revealing them on hover.
 
 With **Readable line length** enabled on desktop, top-level tables and Mermaid diagrams grow to fit their content, using the available pane width when needed. Side gutters adapt to the pane size; compact tables remain aligned with the text, and compact diagrams stay centered. Content inside callouts and embedded notes keeps its containing layout. If a block still overflows, it scrolls horizontally. On supported desktop installers, an edge fade indicates where more content remains to scroll. Mobile keeps Obsidian's normal content layout.
 

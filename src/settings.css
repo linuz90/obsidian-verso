@@ -74,4 +74,10 @@ settings:
     description: Remove divider lines between panes and outlines around tabs.
     type: class-toggle
     default: false
+  -
+    id: verso-status-bar-visible
+    title: Always show status bar
+    description: Keep word count and other status bar items visible instead of revealing them on hover.
+    type: class-toggle
+    default: false
 */
