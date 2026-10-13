@@ -625,7 +625,26 @@ body:not(.is-mobile)
   color: color-mix(in srgb, var(--text-muted) 75%, var(--text-faint));
   font-weight: 450;
   letter-spacing: -0.01em;
-  line-height: 32px;
+}
+
+/* Core sizes the list to its longest label; a steady width reads as a menu.
+   Narrow panes keep core's icon-only grid below 230px. */
+@container empty-state (min-width: 320px) {
+  body:not(.is-mobile)
+    .workspace-leaf-content[data-type="empty"]
+    .empty-state-action-list {
+    width: 260px;
+  }
+}
+
+body:not(.is-mobile)
+  .workspace-leaf-content[data-type="empty"]
+  .empty-state-hotkey {
+  padding: 1px 7px;
+  color: var(--text-faint);
+  font-size: var(--font-ui-smaller);
+  letter-spacing: 0;
+  line-height: 18px;
 }
 
 @media (hover: hover) {
