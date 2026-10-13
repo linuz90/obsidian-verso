@@ -585,6 +585,10 @@ body:not(.is-mobile)
 .nav-file-title,
 .nav-folder-title {
   border-radius: var(--radius-m);
+}
+
+/* Mobile keeps core's touch size, which follows the system text scale. */
+body:not(.is-mobile) :is(.nav-file-title, .nav-folder-title) {
   font-size: 14px;
 }
 

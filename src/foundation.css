@@ -116,6 +116,19 @@ body {
   --interactive-normal: var(--verso-bg-hover);
 }
 
+/* Mobile paints surfaces such as the sidebar view switcher with
+   --interactive-normal, so it must be opaque there. Core's dark mobile value
+   already outranks the translucent one above. */
+.is-mobile.theme-light {
+  --interactive-normal: color-mix(in srgb, var(--verso-text-normal) 10%, var(--verso-bg-secondary));
+}
+
+/* Mobile settings rows use the page color, so fields match core's filled
+   dropdowns instead of vanishing (light) or sinking into wells (dark). */
+body.is-mobile {
+  --background-modifier-form-field: var(--interactive-normal);
+}
+
 /* Obsidian caps the outer CodeMirror sizer, whose internal structure consumes
    part of the readable width. Size the rendered blocks so the configured
    measure describes the text itself in both editing and reading views. */
