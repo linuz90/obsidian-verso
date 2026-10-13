@@ -50,6 +50,8 @@ Use a real theme directory containing file symlinks so Obsidian discovers it as 
 
 Run `pnpm build`, then reload Obsidian with Cmd+R. Changes to `manifest.json` require a full restart.
 
+Finish every visual change in the real app, where Fabrizio can see it: his vault `~/Documents/Notes` loads Verso through these symlinks. Open the note that shows the change, the reported one when there is one, with `open "obsidian://open?path=<url-encoded absolute path>"`, which also pulls Obsidian forward from another Space. Then reload, screenshot the window in the view mode the report used (Live Preview or Reading), and leave Obsidian on that note. A headless repro is only a fallback when the app cannot be shown; say so when you use one.
+
 When publishing an update, bump `manifest.json` deliberately and add its compatibility mapping to `versions.json`.
 
 To use in a new vault, symlink the repo:
